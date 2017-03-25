@@ -2,7 +2,8 @@
 source ../run.conf
 
 cmd="spark-submit --class com.hansod1.SparkPCADemo \
-  --master yarn \
+  --master yarn-cluster \
+  --num-executors 40 \
   --driver-memory 20g \
   --driver-java-options \"-XX:-UseCompressedOops\" \
   --conf spark.input.dir=$1 \
