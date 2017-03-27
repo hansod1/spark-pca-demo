@@ -6,9 +6,9 @@ version := "1.0.0-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
-scalacOptions += "-target:jvm-1.8"
+scalacOptions += "-target:jvm-1.7"
 
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 resolvers += "Local Maven" at Path.userHome.asFile.toURI.toURL + ".m2/repository"
 

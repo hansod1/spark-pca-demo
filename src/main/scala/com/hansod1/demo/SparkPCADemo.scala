@@ -26,6 +26,7 @@ object SparkPCADemo {
     val df = spark.read.schema(schema)
       .option("delimiter","\t")
       .csv(spark.conf.get("spark.input.dir"))
+      .repartition(160)
 
     val tokenizer = new Tokenizer()
       .setInputCol("source_html")
@@ -39,7 +40,7 @@ object SparkPCADemo {
 
     val trigram = new NGram().setInputCol("source_words").setOutputCol("trigrams").setN(3)
 
-    val concat_array = udf((c1 : Array[String], c2 : Array[String], c3 : Array[String]) => {
+    val concat_array = udf((c1 : Seq[String], c2 : Seq[String], c3 : Seq[String]) => {
       c1 ++ c2 ++ c3
     })
 
@@ -48,7 +49,7 @@ object SparkPCADemo {
     val cvModel = new CountVectorizer()
       .setInputCol("source_words_ngrams")
       .setOutputCol("count_features")
-      .setVocabSize(30000)
+      .setVocabSize(10000)
       .setMinDF(2)
       .fit(trigramDF)
 
